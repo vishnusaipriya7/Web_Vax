@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebVax - Settings</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #ffffff;
+      background-color: #000000;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #111111;
+      box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+
+    .header {
+      background-color: #000000;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 3px solid #e74c3c;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .section {
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #444;
+    }
+
+    .section-title {
+      font-size: 18px;
+      margin-bottom: 15px;
+      color: #ffffff;
+    }
+
+    .option-row {
+      display: flex;
+      align-items: center;
+      padding: 10px 0;
+    }
+
+    .option-label {
+      flex: 1;
+    }
+
+    .option-description {
+      color: #aaaaaa;
+      font-size: 13px;
+      margin-top: 3px;
+    }
+
+    .option-control {
+      display: flex;
+      align-items: center;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 24px;
+      margin-right: 15px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #444;
+      transition: .4s;
+      border-radius: 24px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: #2ecc71;
+    }
+
+    input:focus + .slider {
+      box-shadow: 0 0 1px #2ecc71;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+
+    select {
+      padding: 8px;
+      border-radius: 3px;
+      border: 1px solid #555;
+      font-family: inherit;
+      background-color: #222;
+      color: white;
+    }
+
+    .whitelist-container {
+      margin-top: 15px;
+    }
+
+    .whitelist-item {
+      display: flex;
+      align-items: center;
+      padding: 8px;
+      background-color: #222;
+      border-radius: 3px;
+      margin-bottom: 5px;
+      color: white;
+    }
+
+    .whitelist-domain {
+      flex: 1;
+    }
+
+    .whitelist-remove {
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .whitelist-add {
+      display: flex;
+      margin-top: 10px;
+    }
+
+    .whitelist-input {
+      flex: 1;
+      padding: 8px;
+      border-radius: 3px;
+      border: 1px solid #555;
+      font-family: inherit;
+      background-color: #111;
+      color: white;
+    }
+
+    .whitelist-add-btn {
+      background-color: #2ecc71;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      padding: 8px 12px;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .button {
+      border: none;
+      border-radius: 3px;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s;
+    }
+
+    .button-save {
+      background-color: #2ecc71;
+      color: white;
+    }
+
+    .button-save:hover {
+      background-color: #27ae60;
+    }
+
+    .button-reset {
+      background-color: #e74c3c;
+      color: white;
+    }
+
+    .button-reset:hover {
+      background-color: #c0392b;
+    }
+
+    .status-message {
+      padding: 10px;
+      margin-top: 15px;
+      border-radius: 3px;
+      text-align: center;
+      display: none;
+    }
+
+    .status-success {
+      background-color: #145a32;
+      color: #d4efdf;
+      border: 1px solid #27ae60;
+    }
+
+    .status-error {
+      background-color: #641e16;
+      color: #f5b7b1;
+      border: 1px solid #e74c3c;
+    }
+
+    .advanced-toggle {
+      cursor: pointer;
+      color: #2ecc71;
+      margin-bottom: 10px;
+      user-select: none;
+    }
+
+    .advanced-toggle:hover {
+      text-decoration: underline;
+    }
+
+    .advanced-content {
+      display: none;
+      padding: 10px;
+      background-color: #1a1a1a;
+      border-radius: 3px;
+      margin-bottom: 15px;
+    }
+
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      margin-left: 5px;
+    }
+
+    .tooltip .icon {
+      width: 16px;
+      height: 16px;
+      background-color: #555;
+      color: white;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      cursor: help;
+    }
+
+    .tooltip .tooltip-text {
+      visibility: hidden;
+      width: 200px;
+      background-color: #222;
+      color: #fff;
+      text-align: left;
+      border-radius: 3px;
+      padding: 8px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -100px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      font-size: 12px;
+      line-height: 1.4;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    }
+
+    .tooltip:hover .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>WebVax - Settings</h1>
+  </div>
+  
+  <div class="container">
+    <div class="section">
+      <div class="section-title">General Settings</div>
+      
+      <div class="option-row">
+        <div class="option-label">
+          <div>Enable Protection</div>
+          <div class="option-description">Turn on/off all protection features</div>
+        </div>
+        <div class="option-control">
+          <label class="switch">
+            <input type="checkbox" id="enable-protection" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+      
+      <div class="option-row">
+        <div class="option-label">
+          <div>Notification Threshold</div>
+          <div class="option-description">Minimum severity level for notifications</div>
+        </div>
+        <div class="option-control">
+          <select id="notification-threshold">
+            <option value="low">Low (All threats)</option>
+            <option value="medium" selected>Medium</option>
+            <option value="high">High (Critical only)</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="option-row">
+        <div class="option-label">
+          <div>Logging Level</div>
+          <div class="option-description">Amount of details in the extension logs</div>
+        </div>
+        <div class="option-control">
+          <select id="log-level">
+            <option value="error">Error</option>
+            <option value="warn">Warning</option>
+            <option value="info" selected>Info</option>
+            <option value="debug">Debug</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    
+    <div class="section">
+      <div class="section-title">Vulnerability Protection</div>
+      
+      <div class="option-row">
+        <div class="option-label">
+          <div>Cross-Site Scripting (XSS)</div>
+          <div class="option-description">Protect against JavaScript injection attacks</div>
+        </div>
+        <div class="option-control">
+          <label class="switch">
+            <input type="checkbox" id="xss-toggle" checked>
+            <span class="slider"></span>
+          </label>
+          <select id="xss-level">
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high" selected>High</option>
+          </select>
+          <div class="tooltip">
+            <div class="icon">?</div>
+            <span class="tooltip-text">
+              <strong>Low:</strong> Basic sanitization<br>
+              <strong>Medium:</strong> Block suspicious scripts<br>
+              <strong>High:</strong> Block all potentially unsafe content
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="option-row">
+        <div class="option-label">
+          <div>SQL Injection</div>
+          <div class="option-description">Protect against database manipulation attacks</div>
+        </div>
+        <div class="option-control">
+          <label class="switch">
+            <input type="checkbox" id="sql-toggle" checked>
+            <span class="slider"></span>
+          </label>
+          <select id="sql-level">
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high" selected>High</option>
+          </select>
+          <div class="tooltip">
+            <div class="icon">?</div>
+            <span class="tooltip-text">
+              <strong>Low:</strong> Log suspicious patterns<br>
+              <strong>Medium:</strong> Sanitize SQL syntax<br>
+              <strong>High:</strong> Block requests with SQL patterns
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="option-row">
+        <div class="option-label">
+          <div>Command Injection</div>
+          <div class="option-description">Protect against server command execution</div>
+        </div>
+        <div class="option-control">
+          <label class="switch">
+            <input type="checkbox" id="cmd-toggle" checked>
+            <span class="slider"></span>
+          </label>
+          <select id="cmd-level">
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high" selected>High</option>
+          </select>
+          <div class="tooltip">
+            <div class="icon">?</div>
+            <span class="tooltip-text">
+              <strong>Low:</strong> Log suspicious commands<br>
+              <strong>Medium:</strong> Remove command characters<br>
+              <strong>High:</strong> Block requests with command patterns
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="option-row">
+        <div class="option-label">
+          <div>Path Traversal</div>
+          <div class="option-description">Protect against unauthorized file access</div>
+        </div>
+        <div class="option-control">
+          <label class="switch">
+            <input type="checkbox" id="path-toggle" checked>
+            <span class="slider"></span>
+          </label>
+          <select id="path-level">
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high" selected>High</option>
+          </select>
+          <div class="tooltip">
+            <div class="icon">?</div>
+            <span class="tooltip-text">
+              <strong>Low:</strong> Normalize path sequences<br>
+              <strong>Medium:</strong> Remove directory traversal<br>
+              <strong>High:</strong> Block suspicious paths
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="option-row">
+        <div class="option-label">
+          <div>Open Redirect</div>
+          <div class="option-description">Protect against malicious URL redirects</div>
+        </div>
+        <div class="option-control">
+          <label class="switch">
+            <input type="checkbox" id="redirect-toggle" checked>
+            <span class="slider"></span>
+          </label>
+          <select id="redirect-level">
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high" selected>High</option>
+          </select>
+          <div class="tooltip">
+            <div class="icon">?</div>
+            <span class="tooltip-text">
+              <strong>Low:</strong> Flag suspicious redirects<br>
+              <strong>Medium:</strong> Warn before redirecting<br>
+              <strong>High:</strong> Block external redirects
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="section">
+      <div class="section-title">Whitelisted Domains</div>
+      <div class="option-description">These websites will be excluded from vulnerability scanning</div>
+      
+      <div class="whitelist-container" id="whitelist-container">
+      </div>
+      
+      <div class="whitelist-add">
+        <input type="text" class="whitelist-input" id="whitelist-input" placeholder="Enter domain (e.g., example.com)">
+        <button class="whitelist-add-btn" id="whitelist-add-btn">Add</button>
+      </div>
+    </div>
+    
+    <!-- Advanced Settings -->
+    <div class="section">
+      <div class="advanced-toggle" id="advanced-toggle">
+        ▶ Show Advanced Settings
+      </div>
+      
+      <div class="advanced-content" id="advanced-content">
+        <div class="option-row">
+          <div class="option-label">
+            <div>DOM Mutation Observer</div>
+            <div class="option-description">Monitor dynamic HTML changes for XSS</div>
+          </div>
+          <div class="option-control">
+            <label class="switch">
+              <input type="checkbox" id="dom-observer-toggle" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+        
+        <div class="option-row">
+          <div class="option-label">
+            <div>Form Submission Protection</div>
+            <div class="option-description">Check form data before submitting</div>
+          </div>
+          <div class="option-control">
+            <label class="switch">
+              <input type="checkbox" id="form-protection-toggle" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+        
+        <div class="option-row">
+          <div class="option-label">
+            <div>CSS Injection Protection</div>
+            <div class="option-description">Protect against malicious CSS</div>
+          </div>
+          <div class="option-control">
+            <label class="switch">
+              <input type="checkbox" id="css-protection-toggle" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+        
+        <div class="option-row">
+          <div class="option-label">
+            <div>File Upload Monitoring</div>
+            <div class="option-description">Check uploaded files for security risks</div>
+          </div>
+          <div class="option-control">
+            <label class="switch">
+              <input type="checkbox" id="file-upload-toggle" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="actions">
+      <button class="button button-reset" id="reset-defaults">Reset to Defaults</button>
+      <button class="button button-save" id="save-settings">Save Settings</button>
+    </div>
+    
+    <div class="status-message" id="status-message"></div>
+  </div>
+  
+  <script src="options.js"></script>
+</body>
+</html>

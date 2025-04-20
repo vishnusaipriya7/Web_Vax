@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to WebVax</title>
+  
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: white;
+      background-color: #000;
+      line-height: 1.6;
+    }
+  
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+  
+     
+    }
+  
+    .header {
+      background-color: #000000;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+      margin-bottom: 30px;
+      border-bottom: 3px solid #d65745;
+     
+      
+    }
+  
+    .header h1 {
+      margin: 0;
+      font-size: 36px;
+    }
+  
+    .header p {
+      margin: 10px 0 0;
+      font-size: 18px;
+      opacity: 0.9;
+    }
+  
+    .section {
+      background-color: #111;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
+      padding: 25px;
+      margin-bottom: 30px;
+    }
+  
+    .section h2 {
+      color: #ffffff; 
+      margin-top: 0;
+      border-bottom: 2px solid #444;
+      padding-bottom: 10px;
+      font-weight: 300;
+    }
+  
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+  
+    .feature-item {
+      background-color: #1a1a1a;
+      border-radius: 5px;
+      padding: 15px;
+      box-shadow: 0 1px 3px rgba(255, 255, 255, 0.1);
+    }
+  
+    .feature-item h3 {
+      margin-top: 0;
+      color: #ffffff; 
+      font-weight: 300;
+    }
+  
+    .steps {
+      margin-top: 20px;
+    }
+  
+    .step {
+      display: flex;
+      margin-bottom: 15px;
+      align-items: flex-start;
+    }
+  
+    .step-number {
+      background-color: #ff0000; 
+      color: white;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+      flex-shrink: 0;
+    }
+  
+    .step-content {
+      flex: 1;
+    }
+  
+    .step-content h3 {
+      margin-top: 0;
+      color: #ffffff;
+      font-weight: 300;
+    }
+  
+    .cta {
+      text-align: center;
+      margin-top: 30px;
+    }
+  
+    .button {
+      background-color: #ff0000; 
+      color: white;
+      border: none;
+      border-radius: 3px;
+      padding: 12px 24px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+  
+    .button:hover {
+      background-color: #00aa00; 
+    }
+  
+    .vulnerability-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+  
+    .vulnerability-table th, .vulnerability-table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #444;
+    }
+  
+    .vulnerability-table th {
+      background-color: #1a1a1a;
+      color: #ffffff;
+    }
+  
+    .vulnerability-table td {
+      background-color: #111;
+      color: white;
+    }
+  
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      color: #aaa;
+      font-size: 14px;
+    }
+  
+    .footer a {
+      color: #ff4444;
+      text-decoration: none;
+    }
+  
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  
+    code {
+      background-color: #222;
+      padding: 2px 5px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      color: #00ff00;
+    }
+  </style>
+  
+</head>
+<body>
+  <div class="header">
+    <div class="container">
+      <h1>Welcome to WebVax</h1>
+      <p>Your real-time protection against common web vulnerabilities</p>
+    </div>
+  </div>
+  
+  <div class="container">
+    <div class="section">
+      <h2>Protection at a Glance</h2>
+      <p>WebVax acts as an "antivirus for websites," protecting you from malicious attacks while you browse. The extension automatically monitors your web interactions and neutralizes threats before they can harm your system or steal your data.</p>
+      
+      <div class="feature-grid">
+        <div class="feature-item">
+          <h3>XSS Protection</h3>
+          <p>Guards against Cross-Site Scripting (XSS) attacks that inject malicious scripts into websites.</p>
+        </div>
+        
+        <div class="feature-item">
+          <h3>SQL Injection Defense</h3>
+          <p>Detects and prevents attempts to inject malicious SQL commands that could compromise databases.</p>
+        </div>
+        
+        <div class="feature-item">
+          <h3>Command Injection Blocking</h3>
+          <p>Stops attackers from executing unauthorized system commands on servers through vulnerable web applications.</p>
+        </div>
+        
+        <div class="feature-item">
+          <h3>Path Traversal Prevention</h3>
+          <p>Prevents unauthorized access to files and directories through manipulation of file paths.</p>
+        </div>
+        
+        <div class="feature-item">
+          <h3>Open Redirect Protection</h3>
+          <p>Identifies and blocks malicious redirects that could lead to phishing or malware sites.</p>
+        </div>
+        
+        <div class="feature-item">
+          <h3>Real-time Monitoring</h3>
+          <p>Continuously scans web content, forms, and interactions to identify and neutralize threats as they appear.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="section">
+      <h2>How It Works</h2>
+      <p>WebVax employs multiple layers of protection to keep you safe while browsing the web:</p>
+      
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3>Request Interception</h3>
+            <p>The extension monitors all outgoing HTTP requests, analyzing URLs, parameters, and form data before they're sent to servers.</p>
+          </div>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3>Pattern Recognition</h3>
+            <p>Advanced pattern matching algorithms detect signatures of common web attacks and malicious payloads.</p>
+          </div>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3>Payload Sanitization</h3>
+            <p>Potentially harmful input is automatically sanitized to neutralize threats before they reach their target.</p>
+          </div>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <h3>DOM Protection</h3>
+            <p>Client-side JavaScript monitors the DOM for dynamic changes that could introduce vulnerabilities.</p>
+          </div>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">5</div>
+          <div class="step-content">
+            <h3>Alert System</h3>
+            <p>When threats are detected, you're immediately notified with details about the type and severity of the attack.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="section">
+      <h2>Vulnerabilities Detected</h2>
+      <p>The extension protects against these common web vulnerabilities:</p>
+      
+      <table class="vulnerability-table">
+        <thead>
+          <tr>
+            <th>Vulnerability</th>
+            <th>Description</th>
+            <th>Risk Level</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Cross-Site Scripting (XSS)</td>
+            <td>Injection of malicious scripts that execute in the victim's browser</td>
+            <td>High</td>
+          </tr>
+          <tr>
+            <td>SQL Injection</td>
+            <td>Insertion of malicious SQL queries that can manipulate databases</td>
+            <td>Critical</td>
+          </tr>
+          <tr>
+            <td>Command Injection</td>
+            <td>Execution of unauthorized system commands on the host server</td>
+            <td>Critical</td>
+          </tr>
+          <tr>
+            <td>Path Traversal</td>
+            <td>Manipulation of paths to access files outside intended directories</td>
+            <td>High</td>
+          </tr>
+          <tr>
+            <td>Open Redirect</td>
+            <td>Manipulation of redirect URLs to send users to malicious sites</td>
+            <td>Medium</td>
+          </tr>
+          <tr>
+            <td>DOM-Based XSS</td>
+            <td>XSS attacks that occur entirely in the browser through DOM manipulation</td>
+            <td>High</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="section">
+      <h2>Getting Started</h2>
+      <p>Your WebVax is already active and protecting you! Here are some next steps to customize your protection:</p>
+      
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3>Access the Extension</h3>
+            <p>Click the shield icon in your browser's toolbar to view threat statistics and protection status.</p>
+          </div>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3>Configure Protection Levels</h3>
+            <p>Open the settings page to customize protection levels for different types of vulnerabilities.</p>
+          </div>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3>Whitelist Trusted Sites</h3>
+            <p>Add trusted websites to the whitelist if you want to exclude them from scanning.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="cta">
+        <button class="button" id="open-settings">Configure Settings</button>
+      </div>
+    </div>
+    
+    <div class="footer">
+      <p>WebVax v1.0.0 | <a href="#" id="privacy-link">Privacy Policy</a> | <a href="#" id="terms-link">Terms of Use</a></p>
+    </div>
+  </div>
+  
+  <script src="welcome.js"></script>
+</body>
+</html>
