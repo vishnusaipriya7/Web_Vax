@@ -369,7 +369,7 @@
             <option value="high" selected>High</option>
           </select>
           <div class="tooltip">
-            <div class="icon">?</div>
+          
             <span class="tooltip-text">
               <strong>Low:</strong> Basic sanitization<br>
               <strong>Medium:</strong> Block suspicious scripts<br>
@@ -475,8 +475,8 @@
           <div class="tooltip">
             <div class="icon">?</div>
             <span class="tooltip-text">
-              <strong>Low:</strong> Flag suspicious redirects<br>
-              <strong>Medium:</strong> Warn before redirecting<br>
+              <strong>Low:</strong> Log suspicious redirects<br>
+              <strong>Medium:</strong> Sanitize redirect URLs<br>
               <strong>High:</strong> Block external redirects
             </span>
           </div>
@@ -485,10 +485,11 @@
     </div>
     
     <div class="section">
-      <div class="section-title">Whitelisted Domains</div>
-      <div class="option-description">These websites will be excluded from vulnerability scanning</div>
+      <div class="section-title">Domain Whitelist</div>
+      <div class="option-description">Domains exempt from security checks</div>
       
       <div class="whitelist-container" id="whitelist-container">
+        <!-- Whitelist items will be dynamically added here -->
       </div>
       
       <div class="whitelist-add">
@@ -497,70 +498,24 @@
       </div>
     </div>
     
-    <!-- Advanced Settings -->
     <div class="section">
-      <div class="advanced-toggle" id="advanced-toggle">
-        ▶ Show Advanced Settings
-      </div>
-      
+      <div class="advanced-toggle" id="advanced-toggle">Show Advanced Settings</div>
       <div class="advanced-content" id="advanced-content">
         <div class="option-row">
           <div class="option-label">
-            <div>DOM Mutation Observer</div>
-            <div class="option-description">Monitor dynamic HTML changes for XSS</div>
+            <div>Custom XSS Patterns</div>
+            <div class="option-description">Add custom regex patterns for XSS detection (one per line)</div>
           </div>
           <div class="option-control">
-            <label class="switch">
-              <input type="checkbox" id="dom-observer-toggle" checked>
-              <span class="slider"></span>
-            </label>
-          </div>
-        </div>
-        
-        <div class="option-row">
-          <div class="option-label">
-            <div>Form Submission Protection</div>
-            <div class="option-description">Check form data before submitting</div>
-          </div>
-          <div class="option-control">
-            <label class="switch">
-              <input type="checkbox" id="form-protection-toggle" checked>
-              <span class="slider"></span>
-            </label>
-          </div>
-        </div>
-        
-        <div class="option-row">
-          <div class="option-label">
-            <div>CSS Injection Protection</div>
-            <div class="option-description">Protect against malicious CSS</div>
-          </div>
-          <div class="option-control">
-            <label class="switch">
-              <input type="checkbox" id="css-protection-toggle" checked>
-              <span class="slider"></span>
-            </label>
-          </div>
-        </div>
-        
-        <div class="option-row">
-          <div class="option-label">
-            <div>File Upload Monitoring</div>
-            <div class="option-description">Check uploaded files for security risks</div>
-          </div>
-          <div class="option-control">
-            <label class="switch">
-              <input type="checkbox" id="file-upload-toggle" checked>
-              <span class="slider"></span>
-            </label>
+            <textarea id="custom-xss-patterns" rows="4" style="width: 300px; background-color: #222; color: white;"></textarea>
           </div>
         </div>
       </div>
     </div>
     
     <div class="actions">
-      <button class="button button-reset" id="reset-defaults">Reset to Defaults</button>
       <button class="button button-save" id="save-settings">Save Settings</button>
+      <button class="button button-reset" id="reset-settings">Reset to Defaults</button>
     </div>
     
     <div class="status-message" id="status-message"></div>
