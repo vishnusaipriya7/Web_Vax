@@ -11,9 +11,8 @@
       margin: 0;
       padding: 0;
       color: #ffffff;
-      background-color: black;
+      background-color: #000000;
     }
-    
     .header {
       background-color: #980000;
       color: white;
@@ -21,33 +20,28 @@
       text-align: center;
       border-bottom: 3px solid #000000;
     }
-    
     .header h1 {
       margin: 0;
       font-size: 18px;
     }
-    
     .status {
       padding: 15px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid #eee;
+      border-bottom: 1px solid #444;
     }
-    
     .switch {
       position: relative;
       display: inline-block;
       width: 50px;
       height: 24px;
     }
-    
     .switch input {
       opacity: 0;
       width: 0;
       height: 0;
     }
-    
     .slider {
       position: absolute;
       cursor: pointer;
@@ -55,11 +49,10 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: #ccc;
+      background-color: #444;
       transition: .4s;
       border-radius: 24px;
     }
-    
     .slider:before {
       position: absolute;
       content: "";
@@ -71,84 +64,53 @@
       transition: .4s;
       border-radius: 50%;
     }
-    
     input:checked + .slider {
       background-color: #27ae60;
     }
-    
-    input:focus + .slider {
-      box-shadow: 0 0 1px #27ae60;
-    }
-    
     input:checked + .slider:before {
       transform: translateX(26px);
     }
-    
     .stats {
       padding: 15px;
-      border-bottom: 1px solid #eee;
+      border-bottom: 1px solid #444;
     }
-    
     .stat-row {
       display: flex;
       justify-content: space-between;
       margin-bottom: 5px;
     }
-    
     .stat-value {
       font-weight: bold;
     }
-    
     .threats {
       padding: 15px;
     }
-    
     .threats h2 {
       margin-top: 0;
       font-size: 16px;
     }
-    
     .threat-list {
       max-height: 150px;
       overflow-y: auto;
       margin-top: 10px;
     }
-    
     .threat-item {
       padding: 8px;
       border-left: 3px solid #e74c3c;
-      background-color: #000000;
+      background-color: #111111;
       margin-bottom: 5px;
       font-size: 12px;
     }
-    
-    .threat-severity-high {
-      border-left-color: #e74c3c;
-    }
-    
-    .threat-severity-medium {
-      border-left-color: #f39c12;
-    }
-    
-    .threat-severity-low {
-      border-left-color: #3498db;
-    }
-    
-    .threat-type {
-      font-weight: bold;
-    }
-    
-    .threat-time {
-      color: #777;
-      font-size: 10px;
-    }
-    
+    .threat-severity-high { border-left-color: #e74c3c; }
+    .threat-severity-medium { border-left-color: #f39c12; }
+    .threat-severity-low { border-left-color: #3498db; }
+    .threat-type { font-weight: bold; }
+    .threat-time { color: #777; font-size: 10px; }
     .actions {
       padding: 15px;
       display: flex;
       justify-content: space-between;
     }
-    
     .button {
       background-color: #3498db;
       color: white;
@@ -157,29 +119,12 @@
       padding: 8px 12px;
       cursor: pointer;
       font-size: 12px;
-      transition: background-color 0.3s;
     }
-    
-    .button:hover {
-      background-color: #2980b9;
-    }
-    
-    .button-scan {
-      background-color: #27ae60;
-    }
-    
-    .button-scan:hover {
-      background-color: #2ecc71;
-    }
-    
-    .button-settings {
-      background-color: #7f8c8d;
-    }
-    
-    .button-settings:hover {
-      background-color: #95a5a6;
-    }
-    
+    .button:hover { background-color: #2980b9; }
+    .button-scan { background-color: #27ae60; }
+    .button-scan:hover { background-color: #2ecc71; }
+    .button-settings { background-color: #7f8c8d; }
+    .button-settings:hover { background-color: #95a5a6; }
     .footer {
       text-align: center;
       padding: 10px;
@@ -187,98 +132,39 @@
       color: #858585;
       background-color: #000000;
     }
-    
-    .tooltip {
-      position: relative;
-    }
-    
-    .tooltip .tooltip-text {
-      visibility: hidden;
-      width: 200px;
-      background-color: #333;
-      color: #fff;
-      text-align: center;
-      border-radius: 3px;
-      padding: 5px;
-      position: absolute;
-      z-index: 1;
-      bottom: 125%;
-      left: 50%;
-      margin-left: -100px;
-      opacity: 0;
-      transition: opacity 0.3s;
-      font-size: 11px;
-    }
-    
-    .tooltip:hover .tooltip-text {
-      visibility: visible;
-      opacity: 1;
-    }
   </style>
 </head>
 <body>
   <div class="header">
     <h1>WebVax</h1>
   </div>
-  
   <div class="status">
     <div>
       <strong>Protection Status</strong>
     </div>
-    <label class="switch">
+    <label class="switch" aria-label="Toggle protection">
       <input type="checkbox" id="protection-toggle" checked>
       <span class="slider"></span>
     </label>
   </div>
-  
   <div class="stats">
-    <div class="stat-row">
-      <div>Total Threats Detected</div>
-      <div class="stat-value" id="total-threats">0</div>
-    </div>
-    <div class="stat-row">
-      <div>XSS Attacks</div>
-      <div class="stat-value" id="xss-threats">0</div>
-    </div>
-    <div class="stat-row">
-      <div>SQL Injection</div>
-      <div class="stat-value" id="sql-threats">0</div>
-    </div>
-    <div class="stat-row">
-      <div>Command Injection</div>
-      <div class="stat-value" id="cmd-threats">0</div>
-    </div>
-    <div class="stat-row">
-      <div>Path Traversal</div>
-      <div class="stat-value" id="path-threats">0</div>
-    </div>
-    <div class="stat-row">
-      <div>Open Redirect</div>
-      <div class="stat-value" id="redirect-threats">0</div>
-    </div>
+    <div class="stat-row"><div>Total Threats Detected</div><div class="stat-value" id="total-threats">0</div></div>
+    <div class="stat-row"><div>XSS Attacks</div><div class="stat-value" id="xss-threats">0</div></div>
+    <div class="stat-row"><div>SQL Injection</div><div class="stat-value" id="sql-threats">0</div></div>
+    <div class="stat-row"><div>Command Injection</div><div class="stat-value" id="cmd-threats">0</div></div>
+    <div class="stat-row"><div>Path Traversal</div><div class="stat-value" id="path-threats">0</div></div>
+    <div class="stat-row"><div>Open Redirect</div><div class="stat-value" id="redirect-threats">0</div></div>
   </div>
-  
   <div class="threats">
     <h2>Recent Threats</h2>
-    <div class="threat-list" id="threat-list">
-      <div class="threat-item threat-severity-high">
-        <div class="threat-type">XSS Attack</div>
-        <div class="threat-url">example.com/page</div>
-        <div class="threat-time">12:45 PM</div>
-      </div>
-    </div>
+    <div class="threat-list" id="threat-list"></div>
   </div>
-  
   <div class="actions">
     <button class="button button-scan" id="scan-page">Scan Page</button>
     <button class="button" id="reset-stats">Reset Stats</button>
     <button class="button button-settings" id="open-settings">Settings</button>
   </div>
-  
-  <div class="footer">
-    WebVax v1.0.0
-  </div>
-  
+  <div class="footer">WebVax v1.0.1</div>
   <script src="popup.js"></script>
 </body>
 </html>

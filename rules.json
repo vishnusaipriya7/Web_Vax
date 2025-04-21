@@ -1,0 +1,16 @@
+[
+    {
+      "id": 2,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": { "query": "" }
+        }
+      },
+      "condition": {
+        "regexFilter": ".*[?&](query|q|search)=.*%3Cscript.*",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    }
+  ]

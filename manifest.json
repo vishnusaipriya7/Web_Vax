@@ -1,15 +1,14 @@
 {
   "manifest_version": 3,
   "name": "WebVax",
-  "version": "1.0.0",
-  "description": "Real-time detection and mitigation of web vulnerabilities",
+  "version": "1.0",
+  "description": "A browser extension to detect and prevent web vulnerabilities like XSS, SQL Injection, and more.",
   "permissions": [
-    "webRequest",
     "storage",
-    "tabs",
+    "activeTab",
     "scripting",
-    "declarativeNetRequest",
-    "notifications"
+    "notifications",
+    "declarativeNetRequest"
   ],
   "host_permissions": [
     "<all_urls>"
@@ -37,11 +36,20 @@
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
   },
+  "options_page": "options.html",
   "web_accessible_resources": [
     {
-      "resources": ["sanitize.js"],
+      "resources": ["welcome.html"],
       "matches": ["<all_urls>"]
     }
   ],
-  "options_page": "options.html"
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  }
 }

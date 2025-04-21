@@ -1,3 +1,4 @@
+// options.js
 document.addEventListener('DOMContentLoaded', function() {
   const enableProtection = document.getElementById('enable-protection');
   const notificationThreshold = document.getElementById('notification-threshold');
@@ -28,9 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
     statusMessage.textContent = message;
     statusMessage.className = `status-message ${isError ? 'status-error' : 'status-success'}`;
     statusMessage.style.display = 'block';
-    setTimeout(() => {
-      statusMessage.style.display = 'none';
-    }, 3000);
+    setTimeout(() => statusMessage.style.display = 'none', 3000);
   }
 
   function loadConfig() {
@@ -61,9 +60,8 @@ document.addEventListener('DOMContentLoaded', function() {
     redirectLevel.value = config.vulnerabilities.openRedirect.level;
 
     whitelistContainer.innerHTML = '';
-    config.whitelistedDomains.forEach(domain => {
-      addWhitelistItem(domain);
-    });
+    config.whitelistedDomains.forEach(domain => addWhitelistItem(domain));
+    customXssPatterns.value = config.customXssPatterns?.join('\n') || '';
   }
 
   function addWhitelistItem(domain) {
@@ -81,18 +79,18 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function validateDomain(domain) {
-    const domainRegex = /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$/i;
+    const domainRegex = /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)*[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$/i;
     return domainRegex.test(domain);
   }
 
   whitelistAddBtn.addEventListener('click', function() {
     const domain = whitelistInput.value.trim().toLowerCase();
     if (!domain) {
-      showStatus('Please enter a domain', true);
+      showStatus('Enter a domain', true);
       return;
     }
     if (!validateDomain(domain)) {
-      showStatus('Invalid domain format', true);
+      showStatus('Invalid domain (e.g., use example.com)', true);
       return;
     }
     if (!config.whitelistedDomains.includes(domain)) {
@@ -100,74 +98,76 @@ document.addEventListener('DOMContentLoaded', function() {
       addWhitelistItem(domain);
       whitelistInput.value = '';
     } else {
-      showStatus('Domain already in whitelist', true);
+      showStatus('Domain already whitelisted', true);
     }
   });
 
+  let saveTimeout = null;
   saveSettings.addEventListener('click', function() {
-    config.enabled = enableProtection.checked;
-    config.notificationThreshold = notificationThreshold.value;
-    config.logLevel = logLevel.value;
-    config.vulnerabilities.xss.enabled = xssToggle.checked;
-    config.vulnerabilities.xss.level = xssLevel.value;
-    config.vulnerabilities.sqlInjection.enabled = sqlToggle.checked;
-    config.vulnerabilities.sqlInjection.level = sqlLevel.value;
-    config.vulnerabilities.commandInjection.enabled = cmdToggle.checked;
-    config.vulnerabilities.commandInjection.level = cmdLevel.value;
-    config.vulnerabilities.pathTraversal.enabled = pathToggle.checked;
-    config.vulnerabilities.pathTraversal.level = pathLevel.value;
-    config.vulnerabilities.openRedirect.enabled = redirectToggle.checked;
-    config.vulnerabilities.openRedirect.level = redirectLevel.value;
+    clearTimeout(saveTimeout);
+    saveTimeout = setTimeout(() => {
+      config.enabled = enableProtection.checked;
+      config.notificationThreshold = notificationThreshold.value;
+      config.logLevel = logLevel.value;
+      config.vulnerabilities.xss.enabled = xssToggle.checked;
+      config.vulnerabilities.xss.level = xssLevel.value;
+      config.vulnerabilities.sqlInjection.enabled = sqlToggle.checked;
+      config.vulnerabilities.sqlInjection.level = sqlLevel.value;
+      config.vulnerabilities.commandInjection.enabled = cmdToggle.checked;
+      config.vulnerabilities.commandInjection.level = cmdLevel.value;
+      config.vulnerabilities.pathTraversal.enabled = pathToggle.checked;
+      config.vulnerabilities.pathTraversal.level = pathLevel.value;
+      config.vulnerabilities.openRedirect.enabled = redirectToggle.checked;
+      config.vulnerabilities.openRedirect.level = redirectLevel.value;
 
-    // Save custom XSS patterns if provided
-    if (customXssPatterns.value.trim()) {
       config.customXssPatterns = customXssPatterns.value
         .split('\n')
         .map(p => p.trim())
         .filter(p => p);
-    } else {
-      config.customXssPatterns = [];
-    }
 
-    chrome.runtime.sendMessage({ action: 'updateConfig', config }, function(response) {
-      if (chrome.runtime.lastError) {
-        showStatus('Error saving settings', true);
-        console.error('Error saving config:', chrome.runtime.lastError);
-        return;
-      }
-      if (response.success) {
+      chrome.runtime.sendMessage({ action: 'updateConfig', config }, function(response) {
+        if (chrome.runtime.lastError || !response.success) {
+          showStatus('Error saving settings', true);
+          console.error('Error saving config:', chrome.runtime.lastError);
+          return;
+        }
         showStatus('Settings saved successfully');
-      }
-    });
+      });
+    }, 300); 
   });
 
   resetSettings.addEventListener('click', function() {
-    if (confirm('Reset all settings to default values?')) {
+    if (confirm('Reset all settings to defaults?')) {
       config = {
         enabled: true,
-        logLevel: 'info',
+        logLevel: 'warn',
         vulnerabilities: {
-          xss: { enabled: true, level: 'high' },
-          sqlInjection: { enabled: true, level: 'high' },
-          commandInjection: { enabled: true, level: 'high' },
-          pathTraversal: { enabled: true, level: 'high' },
-          openRedirect: { enabled: true, level: 'high' }
+          xss: { enabled: true, level: 'medium' },
+          sqlInjection: { enabled: true, level: 'medium' },
+          commandInjection: { enabled: true, level: 'medium' },
+          pathTraversal: { enabled: true, level: 'medium' },
+          openRedirect: { enabled: true, level: 'medium' }
         },
-        whitelistedDomains: [],
-        notificationThreshold: 'medium',
+        whitelistedDomains: [
+          'google.com',
+          'youtube.com',
+          'facebook.com',
+          'amazon.com',
+          'cloudflare.com',
+          'localhost'
+        ],
+        notificationThreshold: 'high',
         customXssPatterns: []
       };
       chrome.runtime.sendMessage({ action: 'updateConfig', config }, function(response) {
-        if (chrome.runtime.lastError) {
+        if (chrome.runtime.lastError || !response.success) {
           showStatus('Error resetting settings', true);
           console.error('Error resetting config:', chrome.runtime.lastError);
           return;
         }
-        if (response.success) {
-          updateUI();
-          customXssPatterns.value = '';
-          showStatus('Settings reset to defaults');
-        }
+        updateUI();
+        customXssPatterns.value = '';
+        showStatus('Settings reset to defaults');
       });
     }
   });
