@@ -655,7 +655,7 @@ function logVulnerabilities(vulnerabilities, requestData) {
     }
 
     chrome.storage.local.set({ threatStats: threatStats }, () => {
-      // Broadcast threat update to popup
+    
       chrome.runtime.sendMessage({
         action: 'threatUpdate',
         threatStats: threatStats

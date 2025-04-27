@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const threatItem = document.createElement('div');
         threatItem.className = `threat-item threat-severity-${threat.severity}`;
         threatItem.innerHTML = `
-          <div class="threat-type">${threat.type} (Blocked)</div>
+          <div class="threat-type">${threat.type}</div>
           <div class="threat-url">${truncateUrl(threat.url)}</div>
           <div class="threat-time">${formatTime(threat.timestamp)}</div>
         `;
