@@ -1,6 +1,6 @@
 WebVax Project Setup and Execution Guide 🚀
 1. Clone the Repository 🖥️
-Begin by cloning the repository to your local machine using Git. Open a terminal and run the following command:
+Start by cloning the repository to your local machine using Git. Open a terminal and run the following command:
 
 bash
 Copy
@@ -12,6 +12,8 @@ bash
 Copy
 Edit
 cd Web_Vax
+
+---
 2. Install Dependencies 📦
 Once the project files are on your local machine, you'll need to install the required dependencies. Assuming the project uses Node.js, run the following command:
 
@@ -20,7 +22,7 @@ Copy
 Edit
 npm install
 This will install all necessary libraries and packages specified in the package.json file.
-
+---
 3. Set Up the Browser Extension 🌐
 If WebVax includes a browser extension, follow these steps to set it up in your browser.
 
@@ -34,13 +36,21 @@ Click on Load unpacked.
 Select the folder where your extension code resides (this should contain the manifest.json file).
 
 Your extension should now be active and ready for testing! ✅
-
+---
 4. Test the Extension and Application 🔍
-Once the extension is loaded, open the browser and navigate to a website where WebVax is expected to detect vulnerabilities (such as XSS, SQL Injection, etc.).
+Once the extension is loaded, open the browser and navigate to a website where WebVax is expected to detect vulnerabilities such as XSS, SQL Injection, and Open Redirects.
 
-Verify that the extension is functioning as expected by checking for vulnerability notifications or any other feedback provided by the extension.
+Here are examples of how to trigger these vulnerabilities:
 
-You should start seeing alerts or notifications when vulnerabilities are detected, indicating that WebVax is working! 🚨
+XSS (Cross-Site Scripting) Vulnerability 💥
+To test XSS, inject the following script into a form field, URL parameter, or any other input field that may not sanitize user input:
+
+html
+Copy
+Edit
+<script>alert('XSS')</script>
+This will trigger an alert box on the page if the vulnerability is present and detected by the WebVax extension.
+---
 
 ![image](https://github.com/user-attachments/assets/130f25a2-936f-4a92-a677-84cd302543a7)
 ![image](https://github.com/user-attachments/assets/d36ffdcf-8310-4fda-8350-f98580dfc4e4)
