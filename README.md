@@ -15,6 +15,7 @@ cd Web_Vax
 
 ---
 2. Install Dependencies 📦
+   
 Once the project files are on your local machine, you'll need to install the required dependencies. Assuming the project uses Node.js, run the following command:
 
 bash
@@ -22,8 +23,11 @@ Copy
 Edit
 npm install
 This will install all necessary libraries and packages specified in the package.json file.
+
+
 ---
 3. Set Up the Browser Extension 🌐
+   
 If WebVax includes a browser extension, follow these steps to set it up in your browser.
 
 For Google Chrome:
@@ -36,8 +40,11 @@ Click on Load unpacked.
 Select the folder where your extension code resides (this should contain the manifest.json file).
 
 Your extension should now be active and ready for testing! ✅
+
+
 ---
 4. Test the Extension and Application 🔍
+
 Once the extension is loaded, open the browser and navigate to a website where WebVax is expected to detect vulnerabilities such as XSS, SQL Injection, and Open Redirects.
 
 Here are examples of how to trigger these vulnerabilities:
@@ -50,6 +57,8 @@ Copy
 Edit
 <script>alert('XSS')</script>
 This will trigger an alert box on the page if the vulnerability is present and detected by the WebVax extension.
+
+
 ---
 
 ![image](https://github.com/user-attachments/assets/130f25a2-936f-4a92-a677-84cd302543a7)
